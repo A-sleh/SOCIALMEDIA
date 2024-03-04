@@ -2,12 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- main css Style page  -->
+    <meta name="viewport" content="width=device-width, initial-scale=10">
+    <!-- import tailwind css  -->
+    <link href="./dist/output.css" rel="stylesheet">
     <link rel="stylesheet" href="">
     <title>My FaceBook..</title>
 </head>
-<body>
-    
+<body class="bg-[#f0ecff]">
+    <div class="container">
+        <!-- start navbar  -->
+        <nav class="flex justify-between p-4 rounded-md bg-white shadow-xl ">
+            <!-- links and title  -->
+            <ul class="flex gap-x-4 items-center">
+                <li class="font-bold text-[23px]">Asleh</li>
+                <li><a href="#">Home</a></li>
+                <li><a href="">Profile</a></li>
+            </ul>
+            <!-- buttons-container -->
+            <div class="">
+                <button class="btn-sm success-btn">Login</button> 
+                <button class="btn-sm success-btn">Register</button> 
+            </div>
+        </nav>
+        <!-- end navbar  -->
+        
+        <!-- start post -->
+        <section class="post">
+            
+        </section>
+        <!-- end post -->
+
+    </div>
 </body>
 </html>

@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.btn-sm {
+    @apply px-[18px] py-[8px] border rounded-md text-center font-semibold
+}
+.success-btn {
+    @apply  border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition-all duration-300
+}
