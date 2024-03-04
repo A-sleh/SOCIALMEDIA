@@ -2,9 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    html {
+        font-family: "PT Sans";
+    }
+}
+.layout {
+    @apply w-[100%] h-[100vh] bg-[#0000008a] z-50  fixed top-0
+    transition-all duration-100 
+}
+.close-modle {
+    @apply translate-y-[-200%]
+}
+.login-modle {
+    @apply fixed top-12 bg-white py-[20px] w-[330px] rounded-md z-[1000]
+    left-[4%] md:left-[25%] lg:left-[35%] md:w-[400px] transition-all duration-500
+}
+.input-fill {
+    @apply  py-[4px] rounded-md bg-transparent w-full border 
+    mb-[15px] outline-none
+    focus:border-sky-400
+} 
+.navbar {
+    @apply flex justify-between p-4 rounded-md bg-white shadow-xl fixed top-0 md:w-[60%] w-full
+}
+.line {
+    @apply w-full mx-auto my-[15px] h-[1px] bg-gray-300
+}
 .btn-sm {
     @apply px-[18px] py-[8px] border rounded-md text-center font-semibold
 }
 .success-btn {
     @apply  border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition-all duration-300
+}
+.prof-img-sm {
+    @apply w-[40px] h-[40px] rounded-full border-2
+}
+.post {
+    @apply rounded-md mt-[30px] shadow-xl
+}
+.head-post {
+    @apply flex items-center bg-[#e7e5ee] px-[8px] py-[5px] rounded-t-md border border-white
+}
+.post-info {
+    @apply px-[15px] py-[20px] bg-white rounded-b-md
 }
