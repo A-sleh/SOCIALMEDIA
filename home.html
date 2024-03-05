@@ -13,30 +13,56 @@
     <title>My FaceBook..</title>
 </head>
 <body class="bg-[#f0ecff]">
-    <!-- start modle  -->
+    <!-- =========start modle==========  -->
+
+    <!-- start bluer layer  -->
     <div class="layout hidden"></div>
+    <!-- end bluer layer  -->
+
+    <!-- start login modle -->
     <div class="login-modle close-modle ">
+        <!-- title + close btn  -->
         <div class="flex justify-between items-center px-[20px]">
+            <!-- title -->
             <h1 class="font-extralight text-xl">Login</h1>
+            <!-- close btn  -->
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg cursor-pointer cls" viewBox="0 0 16 16">
                 <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
             </svg>
         </div>
+        <!-- draw line  -->
         <div class="line"></div>
+
+        <!-- main input form  -->
         <form action="" class="px-[20px]">
+            <!-- user input -->
             <div class="relative ">
                 <div class="absolute border p-[4px] pl-[5px] bg-gray-300 rounded-l-md">@</div>
-                <input type="text" class="input-fill px-[30px]">
+                <input type="text" class="input-fill px-[30px]" id="username">
             </div>
-            <input type="password" class="input-fill px-[15px]">
+            <!-- password input  -->
+            <input type="password" class="input-fill px-[15px]" id="password">
         </form>
         <div class="line"></div>
+
+        <!-- close + login button  -->
         <div class="flex justify-end text-white font-medium tracking-widest px-[20px]">
-            <button class="btn-sm mr-[10px] bg-gray-600 cls" >close</button> 
+            <button class="btn-sm mr-[10px] bg-gray-600 clear" >clear</button> 
             <button class="btn-sm bg-sky-500" id="login-btn-click">login</button> 
         </div>
     </div> 
+    <!-- end login modle -->
+
     <!-- end modle  -->
+
+    <!-- start alerts  -->
+    <div class="scale-y-0 origin-center alert success-al" id="success-alert">
+        logged successfully
+    </div>
+    <div class="scale-y-0 origin-center alert danger-al" id="danger-alert">
+        logout successfully
+    </div>
+    <!-- end  alerts  -->
 
     <!-- start main content -->
     <div class="container mx-auto md:w-[60%]">
@@ -58,8 +84,11 @@
             </ul>
             <!-- buttons-container -->
             <div class="">
+                <!-- for logged in user  -->
                 <button class="btn-sm success-btn" id="login">Login</button> 
                 <button class="btn-sm success-btn" id="register">Register</button> 
+                <!-- for no-logged in user  -->
+                <button class="btn-sm danger-btn hidden" id="logout" onclick="logout()">Logout</button> 
             </div>
         </nav>
         <!-- end navbar  -->
@@ -91,6 +120,11 @@
                         <span class="ml-[10px]">
                             (3) comments
                         </span>
+                        <div class="tags flex" id="tags">
+                            <div class="tag">hello</div>
+                            <div class="tag">hello</div>
+                            <div class="tag">hello</div>
+                        </div>
                     </div>
                 </div>
             </div>

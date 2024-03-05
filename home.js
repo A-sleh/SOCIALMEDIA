@@ -1,6 +1,11 @@
 
+// setup user interface when open page
+setupUI()
+
+
 // import All posts 
 let postContainer = document.getElementById('posts') ;
+const baseURL = 'https://tarmeezacademy.com/api/v1'
 
 // this funtion to create post 
 
@@ -9,6 +14,8 @@ function createpost( post , author ) {
     let title = " ";
     if( post.title != null ) title = post.title ;
     // create the post with API
+    const tagsContainer = createTags(post)
+    
     let pos = `
     <div class="post">
         <div class="head-post">
@@ -32,6 +39,7 @@ function createpost( post , author ) {
                 <span class="ml-[10px]">
                     (${post.comments_count}) comments
                 </span>
+                ${tagsContainer}
             </div>
         </div>
     </div>
@@ -39,9 +47,27 @@ function createpost( post , author ) {
     postContainer.innerHTML += pos
 }
 
+// this funtion to create tags section 
+function createTags(post) {
+    let div = document.createElement('div') ;
+    div.classList.add("tags") ;
+    div.classList.add("flex") ;
+    const tags = post.tags ;
+
+    for( tag of tags ) {
+        let subTag = `
+            <div class="tag">${tag}</div>
+        `
+        div.innerHTML += subTag
+    }
+    let tempDiv = document.createElement('div') ;
+    tempDiv.appendChild(div) ;
+    return tempDiv.innerHTML 
+}
+
 // execute the posts From API requerst
 async function executeAllPosts() {
-    let response = await fetch('https://tarmeezacademy.com/api/v1/posts')
+    let response = await fetch(`${baseURL}/posts`)
     let json = await response.json()
     let posts = json.data
     postContainer.innerHTML = ""
@@ -63,24 +89,119 @@ loginBtn.onclick =() => {
 }
 
 addEventListener( 'click' , function(btn) {
+
+    // close longin modle
     if(btn.target.classList.contains('cls')) {
         showAndHiddenLoginModle()
     }
+
+    // clear input filed in login modle
+    if(btn.target.classList.contains('clear')) {
+        clearInputFiled('username','password')
+    }
+
 })
+
+// show and hidden popup login modle 
 
 function showAndHiddenLoginModle() {
     layout.classList.toggle('hidden')        
     loginMolde.classList.toggle('close-modle')
 }
 
+// clear input form 
+function clearInputFiled(...inputs) {
+    
+    for(let i = 0 ; i < inputs.length ; ++ i ) {
+        document.getElementById(inputs[i]).value = ''
+    }
+}
 
 // login user
 
 let loginBtnClick = document.getElementById('login-btn-click') ;
 
 loginBtnClick.onclick = function() {
-    alert('here') ;
+    let username = document.getElementById('username').value
+    let password = document.getElementById('password').value
+    const params = {
+        "username" : username ,
+        "password" : password 
+    }
+    axios.post(`${baseURL}/login`, params )
+    .then( (response) => {
+
+        // show success alert to user
+        showAlert('success-alert')
+
+        // store user intformation in localStorage 
+
+        let token = response.data.token ;
+        localStorage.setItem('token' , token )  ;
+        localStorage.setItem('user',JSON.stringify(response.user)) ;
+
+        // hidden the popup modle 
+
+        showAndHiddenLoginModle() ;
+
+        // setup user interface 
+
+        setupUI() ;
+
+    }).catch( error => {
+        alert(error)
+    })
 }
+
+// popup to show Alert 
+
+function showAlert(alert) {
+    let successAlert = document.getElementById(alert) ; 
+    successAlert.classList.remove('scale-y-0')
+    successAlert.classList.add('scale-y-1')
+    setTimeout( () => {
+        successAlert.classList.add('scale-y-0')
+    } , 2000)
+}
+
+// setup user interface
+
+function setupUI() {
+    const token = localStorage.getItem('token') ;
+    
+    if( token == null ) { // the user is guest (no logged)
+        showAndHiddenBtn()
+    }else {
+        showAndHiddenBtn()
+    }
+}
+
+// show and hidden login + logout + register 
+
+function showAndHiddenBtn() {
+    
+    let btnsId = ['logout',"login" , 'register'] ;
+    for( btn of btnsId ) {
+        document.getElementById(btn).classList.toggle('hidden') ;
+    }
+}
+
+// 
+function logout() {
+    console.log('here')
+    // remove token + user info from localStorage
+    localStorage.removeItem('token')
+    localStorage.removeItem('user') 
+    // setup user interface
+    setupUI() ;
+    // show alert with successfully logout 
+    showAlert('danger-alert')
+}
+
+
+
+
+
 
 
 
