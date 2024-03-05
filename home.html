@@ -13,11 +13,16 @@
     <title>My FaceBook..</title>
 </head>
 <body class="bg-[#f0ecff]">
+
+    <!--  Add Post Button -->
+    <button class="create-post scale-y-0">+</button>
+    <!-- ! Add Post Button -->
+
     <!-- =========start modle==========  -->
 
     <!-- start bluer layer  -->
     <div class="layout hidden"></div>
-    <!-- end bluer layer  -->
+    <!-- ! end bluer layer  -->
 
     <!-- start login modle -->
     <div class="login-modle close-modle ">
@@ -53,7 +58,7 @@
             <button class="btn-sm bg-sky-500" id="login-btn-click">login</button> 
         </div>
     </div> 
-    <!-- end login modle -->
+    <!-- !end login modle -->
 
     <!-- start register modle -->
     <div class="register-modle close-modle">
@@ -72,11 +77,9 @@
         <!-- main input form  -->
         <form action="" class="px-[20px]">
             <!-- image input  -->
-            <div class="relative ">
-                <h2 class="mb-[8px] font-medium">Profile Image</h1>
-                <div class="absolute border p-[4px] px-[8px] bg-gray-300 rounded-l-md font-medium">choose File</div>
-                <input type="image" class="input-fill pl-[100px]" id="image" value="No file Chosen">
-            </div>
+            <h2 class="mb-[8px] font-bold">Profile Image</h2>
+            <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="image-profile" type="file" multiple>
+
             <!-- the realy user name input  -->
             <h2 class="mb-[8px] font-medium">Name</h1>
             <input type="text" class="input-fill pl-[10px]" id="name">
@@ -98,8 +101,46 @@
             <button class="btn-sm bg-sky-500" id="register-btn-click">Register</button> 
         </div>
     </div> 
-    <!-- end register modle -->
+    <!-- ! end register modle -->
 
+    <!-- start create post modle -->
+    <div class="create-post-modle close-modle">
+        <!-- title + close btn  -->
+        <div class="flex justify-between items-center px-[20px]">
+            <!-- title -->
+            <h1 class="font-bold text-xl">Create A New Post</h1>
+            <!-- close btn  -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg cursor-pointer cls-create-post" viewBox="0 0 16 16">
+                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+            </svg>
+        </div>
+        <!-- draw line  -->
+        <div class="line"></div>
+
+        <!-- main input form  -->
+        <form action="" class="px-[20px]">
+            <!-- post title input -->
+            <h2 class="mb-[8px] font-semibold">Title</h1>
+            <input type="text" class="input-fill px-[10px]" id="title">
+
+            <!-- description post  input  -->
+            <textarea class="input-fill px-[10px] resize-none" id="description"></textarea>
+            <!-- image input  -->
+            <div class="relative ">
+                <h2 class="mb-[8px] font-bold">Add Image</h2>
+                <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="image-post" type="file" multiple>
+                
+            </div>
+        </form>
+        <div class="line"></div>
+
+        <!-- close + login button  -->
+        <div class="flex justify-end text-white font-medium tracking-widest px-[20px]">
+            <button class="btn-sm mr-[10px] bg-gray-600 clear-create-post" >clear</button> 
+            <button class="btn-sm bg-sky-500" id="create-post-btn">create</button> 
+        </div>
+    </div> 
+    <!-- !end create post modle -->
 
     <!-- end modle  -->
 
@@ -188,5 +229,6 @@
 
     <!-- import script  -->
     <script src="./home.js"></script>
+    <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
 </body>
 </html>
