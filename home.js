@@ -1,13 +1,13 @@
 
-// setup user interface when open page
+// * setup user interface when open page
 setupUI()
 
 
-// import All posts 
+//* import All posts 
 let postContainer = document.getElementById('posts') ;
 const baseURL = 'https://tarmeezacademy.com/api/v1'
 
-// this funtion to create post 
+//* this funtion to create post 
 
 function createpost( post , author ) {
     // set the title of post 
@@ -47,7 +47,7 @@ function createpost( post , author ) {
     postContainer.innerHTML += pos
 }
 
-// this funtion to create tags section 
+//*  this funtion to create tags section 
 function createTags(post) {
     let div = document.createElement('div') ;
     div.classList.add("tags") ;
@@ -65,7 +65,7 @@ function createTags(post) {
     return tempDiv.innerHTML 
 }
 
-// execute the posts From API requerst
+//*  execute the posts From API requerst
 async function executeAllPosts() {
     let response = await fetch(`${baseURL}/posts`)
     let json = await response.json()
@@ -76,40 +76,63 @@ async function executeAllPosts() {
         createpost(post,author)
     }
 }
-// generate all posts
+//*  generate all posts
 executeAllPosts()
 
-// login model
-let loginBtn = document.getElementById('login') ;
-let layout = document.getElementsByClassName('layout')[0] ;
+//*  login model
+let registerMolde = document.getElementsByClassName('register-modle')[0] ;
 let loginMolde = document.getElementsByClassName('login-modle')[0] ;
+let layout = document.getElementsByClassName('layout')[0] ;
+let registerBtn = document.getElementById('register') ;
+let loginBtn = document.getElementById('login') ;
 
+//! set login modle 
 loginBtn.onclick =() => {
     showAndHiddenLoginModle()
 }
 
+//! set register modle 
+registerBtn.onclick = () => {
+    showAndHiddenRegisterModle()
+}
+
 addEventListener( 'click' , function(btn) {
 
-    // close longin modle
+    //*  close longin modle
     if(btn.target.classList.contains('cls')) {
         showAndHiddenLoginModle()
     }
-
-    // clear input filed in login modle
+    
+    //*  clear input filed in login modle
     if(btn.target.classList.contains('clear')) {
         clearInputFiled('username','password')
     }
-
+    
+    //*  close longin modle
+    if(btn.target.classList.contains('cls-register')) {
+        showAndHiddenRegisterModle()
+    }
+    //* clear input filed in register modle
+    if(btn.target.classList.contains('clear-register')) {
+        clearInputFiled('register-username','register-password','name')
+    }
 })
 
-// show and hidden popup login modle 
+//*  show and hidden popup login modle 
 
 function showAndHiddenLoginModle() {
     layout.classList.toggle('hidden')        
     loginMolde.classList.toggle('close-modle')
 }
 
-// clear input form 
+//*  show and hidden popup register modle 
+
+function showAndHiddenRegisterModle() {
+    layout.classList.toggle('hidden')        
+    registerMolde.classList.toggle('close-modle')
+}
+
+//*  clear input form 
 function clearInputFiled(...inputs) {
     
     for(let i = 0 ; i < inputs.length ; ++ i ) {
@@ -117,7 +140,7 @@ function clearInputFiled(...inputs) {
     }
 }
 
-// login user
+//*  login user
 
 let loginBtnClick = document.getElementById('login-btn-click') ;
 
@@ -131,20 +154,20 @@ loginBtnClick.onclick = function() {
     axios.post(`${baseURL}/login`, params )
     .then( (response) => {
 
-        // show success alert to user
-        showAlert('success-alert')
+        //*  show success alert to user
+        showAlert('success-alert','login')
 
-        // store user intformation in localStorage 
+        //*  store user intformation in localStorage 
 
         let token = response.data.token ;
         localStorage.setItem('token' , token )  ;
         localStorage.setItem('user',JSON.stringify(response.user)) ;
 
-        // hidden the popup modle 
+        //*  hidden the popup modle 
 
         showAndHiddenLoginModle() ;
 
-        // setup user interface 
+        //*  setup user interface 
 
         setupUI() ;
 
@@ -153,25 +176,71 @@ loginBtnClick.onclick = function() {
     })
 }
 
-// popup to show Alert 
+//* Register user 
 
-function showAlert(alert) {
+let registerBtnClicked = document.getElementById('register-btn-click')
+
+registerBtnClicked.onclick = function() {
+    console.log('here')
+    let name = document.getElementById('name').value
+    let username = document.getElementById('register-username').value
+    let password = document.getElementById('register-password').value
+    const params = {
+        "name" : name ,
+        "username" : username ,
+        "password" : password 
+    }
+    axios.post(`${baseURL}/register`, params )
+    .then( (response) => {
+
+        //*  show success alert to user
+        showAlert('success-alert','register')
+
+        //*  store user intformation in localStorage 
+
+        let token = response.data.token ;
+        localStorage.setItem('token' , token )  ;
+        localStorage.setItem('user',JSON.stringify(response.user)) ;
+
+        //*  hidden the popup modle 
+
+        showAndHiddenRegisterModle() ;
+
+        //*  setup user interface 
+
+        setupUI() ;
+
+    }).catch( error => {
+        alert(error)
+    })
+}
+
+//* popup to show Alert 
+
+function showAlert(alert,type) {
     let successAlert = document.getElementById(alert) ; 
+    if(type == 'login') {
+        successAlert.innerHTML = "logged in successfully"
+    }else if( type == 'register') {
+        successAlert.innerHTML = "Registiration successfully"
+    }
     successAlert.classList.remove('scale-y-0')
     successAlert.classList.add('scale-y-1')
+
     setTimeout( () => {
         successAlert.classList.add('scale-y-0')
     } , 2000)
 }
 
-// setup user interface
+//* setup user interface
 
 function setupUI() {
     const token = localStorage.getItem('token') ;
-    
-    if( token == null ) { // the user is guest (no logged)
+    let logoutBtn = document.getElementById('logout') ;
+
+    if( token == null && !logoutBtn.classList.contains('hidden') ) { // the user is guest (no logged)
         showAndHiddenBtn()
-    }else {
+    }else if(token != null && logoutBtn.classList.contains('hidden')) {
         showAndHiddenBtn()
     }
 }
@@ -183,12 +252,12 @@ function showAndHiddenBtn() {
     let btnsId = ['logout',"login" , 'register'] ;
     for( btn of btnsId ) {
         document.getElementById(btn).classList.toggle('hidden') ;
+        
     }
 }
 
 // 
 function logout() {
-    console.log('here')
     // remove token + user info from localStorage
     localStorage.removeItem('token')
     localStorage.removeItem('user') 
@@ -196,7 +265,10 @@ function logout() {
     setupUI() ;
     // show alert with successfully logout 
     showAlert('danger-alert')
+
 }
+
+
 
 
 

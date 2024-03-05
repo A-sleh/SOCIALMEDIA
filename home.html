@@ -37,10 +37,12 @@
         <form action="" class="px-[20px]">
             <!-- user input -->
             <div class="relative ">
-                <div class="absolute border p-[4px] pl-[5px] bg-gray-300 rounded-l-md">@</div>
-                <input type="text" class="input-fill px-[30px]" id="username">
+                <h2 class="mb-[8px] font-medium">Username </h1>
+                <div class="absolute border p-[4px] px-[8px] bg-gray-300 rounded-l-md">@</div>
+                <input type="text" class="input-fill px-[37px]" id="username">
             </div>
             <!-- password input  -->
+            <h2 class="mb-[8px] font-medium">Password </h1>
             <input type="password" class="input-fill px-[15px]" id="password">
         </form>
         <div class="line"></div>
@@ -53,15 +55,63 @@
     </div> 
     <!-- end login modle -->
 
+    <!-- start register modle -->
+    <div class="register-modle close-modle">
+        <!-- title + close btn  -->
+        <div class="flex justify-between items-center px-[20px]">
+            <!-- title -->
+            <h1 class="font-semibold text-xl">Register</h1>
+            <!-- close btn  -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg cursor-pointer cls-register" viewBox="0 0 16 16">
+                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+            </svg>
+        </div>
+        <!-- draw line  -->
+        <div class="line"></div>
+
+        <!-- main input form  -->
+        <form action="" class="px-[20px]">
+            <!-- image input  -->
+            <div class="relative ">
+                <h2 class="mb-[8px] font-medium">Profile Image</h1>
+                <div class="absolute border p-[4px] px-[8px] bg-gray-300 rounded-l-md font-medium">choose File</div>
+                <input type="image" class="input-fill pl-[100px]" id="image" value="No file Chosen">
+            </div>
+            <!-- the realy user name input  -->
+            <h2 class="mb-[8px] font-medium">Name</h1>
+            <input type="text" class="input-fill pl-[10px]" id="name">
+            <!-- user name input -->
+            <div class="relative ">
+                <h2 class="mb-[8px] font-medium">Username</h1>
+                <div class="absolute border p-[4px] px-[8px] bg-gray-300 rounded-l-md">@</div>
+                <input type="text" class="input-fill pl-[40px]" id="register-username">
+            </div>
+            <!-- password input  -->
+            <h2 class="mb-[8px] font-medium">Password</h1>
+            <input type="password" class="input-fill px-[15px]" id="register-password">
+        </form>
+        <div class="line"></div>
+
+        <!-- close + login button  -->
+        <div class="flex justify-end text-white font-medium tracking-widest px-[20px]">
+            <button class="btn-sm mr-[10px] bg-gray-600 clear-register">clear</button> 
+            <button class="btn-sm bg-sky-500" id="register-btn-click">Register</button> 
+        </div>
+    </div> 
+    <!-- end register modle -->
+
+
     <!-- end modle  -->
 
     <!-- start alerts  -->
-    <div class="scale-y-0 origin-center alert success-al" id="success-alert">
-        logged successfully
-    </div>
-    <div class="scale-y-0 origin-center alert danger-al" id="danger-alert">
-        logout successfully
-    </div>
+        <!-- success Alert  -->
+        <div class="scale-y-0 origin-center alert success-al" id="success-alert">
+            logged in successfully
+        </div>
+        <!-- danger Alert  -->
+        <div class="scale-y-0 origin-center alert danger-al" id="danger-alert">
+            logged out successfully
+        </div>
     <!-- end  alerts  -->
 
     <!-- start main content -->
