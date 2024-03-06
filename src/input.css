@@ -70,3 +70,10 @@
     @apply w-12 h-12 rounded-full bg-sky-400 text-white fixed bottom-5 right-2 md:bottom-10 md:right-24 text-4xl font-medium flex justify-center items-center 
     z-50 duration-300 transition-all origin-center shadow-lg
 }
+.post-comments {
+    @apply w-[100%]  h-fit bg-white rounded-b-md  border-t-2
+    p-2 py-6 mt-[5px]
+}
+.comment {
+    @apply w-[100%] p-3 pr-0 bg-[#f0ecff] rounded-md
+}
