@@ -102,6 +102,7 @@ let registerMolde = document.getElementsByClassName('register-modle')[0] ;
 
 //! set register modle 
 registerBtn.onclick = () => {
+    //!
     showAndHiddenRegisterModle()
 }
 
@@ -227,7 +228,7 @@ loginBtnClick.onclick = function() {
 
         let token = response.data.token ;
         localStorage.setItem('token' , token )  ;
-        localStorage.setItem('user',JSON.stringify(response.user)) ;
+        localStorage.setItem('user',JSON.stringify(response.data.user)) ;
 
         //*  hidden the popup modle 
 
@@ -238,6 +239,7 @@ loginBtnClick.onclick = function() {
         setupUI() ;
 
     }).catch( error => {
+        console.log(error.response )
         const errorType =  error.response.data.message
         showAlert("danger-alert","error-catch",errorType)
     })
@@ -270,7 +272,7 @@ registerBtnClicked.onclick = function() {
 
         let token = response.data.token ;
         localStorage.setItem('token' , token )  ;
-        localStorage.setItem('user',JSON.stringify(response.user)) ;
+        localStorage.setItem('user',JSON.stringify(response.data.user)) ;
 
         //*  hidden the popup modle 
 
@@ -290,7 +292,6 @@ registerBtnClicked.onclick = function() {
 
 function showAlert(alert,type,error) {
     let Alert = document.getElementById(alert) ; 
-    console.log(Alert.innerHTML)
     if(type == 'login') {
         Alert.innerHTML = "logged in successfully"
     }else if( type == 'register') {
@@ -313,15 +314,20 @@ function showAlert(alert,type,error) {
 function setupUI() {
     const token = localStorage.getItem('token') ;
     let logoutBtn = document.getElementById('logout') ;
+    let navUserInfo = document.getElementById('user-info') ;
 
     if( token == null && !logoutBtn.classList.contains('hidden') ) { // the user is guest (no logged)
         showAndHiddenBtn()
-    console.log(createPostBTN)
-    console.log('as1')
+        //* set user info in navbar
+        navUserInfo.innerHTML = ""
         createPostBTN.classList.toggle('scale-y-0')
     }else if( token != null && logoutBtn.classList.contains('hidden')) {
         showAndHiddenBtn()
-        console.log('as2')
+        //* set user info in navbar
+        let content = setUserInfo() ;
+        console.log(navUserInfo)
+        navUserInfo.innerHTML += content[0] ;
+        navUserInfo.innerHTML += content[1] ;
         createPostBTN.classList.toggle('scale-y-0')
     }
 }
@@ -336,7 +342,6 @@ function logout() {
     // setup user interface
     setupUI() ;
     // show alert with successfully logout 
-    console.log('befor ')
     showAlert('danger-alert','dan')
 }
 
@@ -349,6 +354,24 @@ function showAndHiddenBtn() {
         document.getElementById(btn).classList.toggle('hidden') ;
         
     }
+}
+
+// setup user information from API when user loge in website
+
+function setUserInfo() {
+
+    let storageUser = localStorage.getItem('user') ;
+    console.log(storageUser)
+    let user = JSON.parse(storageUser) ;
+
+    let contetn = 
+    [
+        `<img src="${user.profile_image}" alt="" class="prof-img-sm " id="nav-user-image">`
+        ,
+        `<h1 class="mx-[15px] font-semibold text-sm md:text-xl" id="nav-user-name">${user.name}</h1>`
+    ]
+    
+    return contetn ;
 }
 
 

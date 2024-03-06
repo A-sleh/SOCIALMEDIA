@@ -1129,6 +1129,16 @@ html {
   margin-bottom: 10px;
 }
 
+.mx-\[20px\] {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.mx-\[15px\] {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
 .mb-1 {
   margin-bottom: 0.25rem;
 }
@@ -1539,10 +1549,6 @@ html {
 .py-3 {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
-}
-
-.pl-\[100px\] {
-  padding-left: 100px;
 }
 
 .pl-\[10px\] {
