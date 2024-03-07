@@ -10,13 +10,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-    <title>My FaceBook..</title>
+    <title>Profile</title>
 </head>
 <body class="bg-[#f0ecff]">
-
-    <!--  Add Post Button -->
-    <button class="create-post scale-y-0">+</button>
-    <!-- ! Add Post Button -->
 
     <!-- =========start modal==========  -->
 
@@ -217,9 +213,36 @@
             </div>
         </nav>
         <!-- end navbar  -->
-        
+
+        <!-- start Profile content  -->
+        <section class="mt-[100px] Profile-content ">
+            <!-- user detailes  -->
+            <div class="flex justify-center items-center md:mr-10 ">
+                <!-- user image  -->
+                <img src="" alt="" class="profile-image-md" id="userImage">
+                <!-- user names and realy name  -->
+                <ul >
+                    <li class="font-semibold text-xl p-2" id="userName"></li> 
+                    <li class="font-semibold text-xl p-2" id="Name"></li> 
+                </ul>
+            </div>
+            <!-- show number of post and comments was created and added by user  -->
+            <div class="w-[100%] md:ml-10  flex items-start mt-[20px] md:mt-0 md:flex-col md:flex-1">
+                <!-- show numbers of posts  -->
+                <div class="show-number-post " id="post-number">0</div>
+                <!-- show number of comments  -->
+                <div class="show-number-comments ml-16 md:ml-0" id="comments-number">0</div>
+            </div>
+        </section>
+        <!-- end Profile content  -->
+
+        <!-- User Name In Large font  -->
+        <h1 class="text-4xl text-center md:text-left" id="name-title"></h1>
+
+        <!-- start show all Posts  -->
+
         <!-- start posts -->
-        <section id="posts" class="mt-[100px]">
+        <section id="posts" class="mt-[50px]">
             <!-- start post  -->
             <div class="post">
                 <!-- post headr  -->
@@ -267,7 +290,6 @@
 
     <!-- import script  -->
     <script src="./JavaScript/main_logic.js"></script>
-    <script src="./JavaScript/home.js"></script>
     <script src="./JavaScript/profile.js"></script>
     <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
 </body>

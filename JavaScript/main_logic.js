@@ -71,6 +71,10 @@ addEventListener( 'click' , function(btn) {
     if(btn.target.classList.contains('clear-register')) {
         clearInputFiled('register-username','register-password','name')
     }
+    //*  close longin modle
+    if(btn.target.classList.contains('delete-post-closeBtn')) {
+        showAndHideDeletePostModal()
+    }
 })
 
 //*  global clear input form 
@@ -306,6 +310,50 @@ function editPostBtnClicked(postObject) {
     titlePost.value = post.title ;
     bodypost.value = post.body ;
 
+}
+//* delete post detailes 
+function deletPostBtnClicked(postId) {
+    // show delete post modal 
+    showAndHideDeletePostModal()
+    let acceptDeleteBtn = document.getElementById('Accept-delete-btn') ;
+
+    acceptDeleteBtn.onclick = () => {
+        let URL = `${baseURL}/posts/${postId}`
+        const token = localStorage.getItem('token') ;
+        const config = {
+            "headers" : {
+                "authorization" : `Bearer ${token}` ,
+                "Content-Type" : "multipart/form-data"
+            } 
+        }
+        axios.delete(URL,config)
+        .then((response) => {
+            // hidden delete post modale 
+            showAndHideDeletePostModal() 
+            showAlert( "The Post Has Been Deleted Successfully", 'success-alert') ;
+            // reset Page
+            window.location = 'home.html' ;
+        }).catch(error => {
+            console.log(error.response)
+        })
+    }
+}
+
+// show delete post modale 
+function showAndHideDeletePostModal() {
+    // selecte delete modal 
+    let deleteModal = document.getElementById('popup-modal') ;
+    
+    deleteModal.classList.toggle('close-modle');
+    layout.classList.toggle('hidden')  
+}
+
+// clicked on profile button 
+
+let profileBtnClicked = document.getElementById('profile-btn') ;
+
+profileBtnClicked.onclick = () => {
+    setProfileDetailes(1,null)
 }
 
 

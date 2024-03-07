@@ -27,7 +27,7 @@
     focus:border-sky-400
 } 
 .navbar {
-    @apply flex justify-between p-4 rounded-md bg-white shadow-xl fixed top-0 md:w-[60%] w-full
+    @apply flex justify-between p-4 rounded-md bg-white shadow-xl fixed top-0 md:w-[60%] w-full z-[40]
 }
 .line {
     @apply w-full mx-auto my-[15px] h-[1px] bg-gray-300
@@ -84,4 +84,22 @@
 #edit-btn {
     @apply px-[8px] py-[5px] bg-gray-500 text-white rounded-md hover:bg-red-500 
     transition-all duration-200 shadow-2xl hover:shadow-sm
+}
+#delete-btn {
+    @apply px-[8px] py-[5px] bg-red-600 text-white rounded-md ml-[5px]
+}
+.Profile-content {
+    @apply flex  px-9 py-7 bg-white rounded-md 
+    mb-[50px] flex-col items-start w-[100%] md:flex-row
+}
+.profile-image-md {
+    @apply w-[100px] h-[100px] rounded-full mr-[20px]  border-2
+}
+.show-number-post {
+    @apply text-5xl font-light md:mb-3  relative after:absolute after:content-['Posts'] 
+    after:text-sm after:bottom-0 after:ml-[2px] after:text-gray-500 z-20 
+}
+.show-number-comments {
+    @apply text-5xl font-light md:mt-3 relative after:absolute after:content-['comments'] 
+    after:text-sm after:bottom-0 after:ml-[2px] after:text-gray-500 z-20
 }

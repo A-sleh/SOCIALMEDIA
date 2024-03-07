@@ -32,21 +32,26 @@ function createpost( post , author ) {
     let user = JSON.parse(localStorage.getItem('user')) ;
     let isMyPost = user != null && post.author.id == user.id ;
     let editdBtnContent = ` ` ;
+    let deleteBtnContent = ` ` ;
     if(isMyPost) {
         editdBtnContent =`<button id="edit-btn" onclick="editPostBtnClicked('${encodeURIComponent(JSON.stringify(post))}')">Edit</button>`
+        deleteBtnContent =`<button id="delete-btn" onclick = "deletPostBtnClicked(${post.id})">delete</button>`
     }
     
 
     let pos = `
     <div class="post cursor-pointer">
         <!-- post headr  -->
-        <div class="head-post">
+        <div class="head-post" onclick = "setProfileDetailes(0,'${encodeURIComponent(JSON.stringify(author))}')" >
             <!-- User information  -->
             <div class="flex items-center">
                 <img src="${author.profile_image}" alt="" class="prof-img-sm">
                 <b class="ml-[6px]">${author.username}</b>
             </div>
-            ${editdBtnContent}
+            <div class ="flex justify-center items-center" >
+                ${editdBtnContent}
+                ${deleteBtnContent}
+            </div>
         </div>
         <div class="post-info" onclick = "postCliked(${post.id})">
             <img src="${post.image}" alt="" class="rounded-t-md w-[100%] ">

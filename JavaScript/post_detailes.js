@@ -19,10 +19,13 @@ async function executeAllPosts(postID) {
     let json = await response.json()
     let post = json.data
     const comments = post.comments
-
     let author = post.author
+    // if the user of post i will show settings buttons
+    let owner = JSON.parse(localStorage.getItem("user")).id == author.id ;
+
+    
     //! set user infromations
-    setPostInfo(author,post)
+    setPostInfo(author,post,owner)
     //! set tags Section 
     createTags(post)
     //! show All comments in post 
@@ -32,7 +35,15 @@ async function executeAllPosts(postID) {
 executeAllPosts(postID)
 
 //* set Post Informations 
-function setPostInfo(author,post) {
+function setPostInfo(author,post,owner) {
+
+    let settingsButtons = document.getElementById('settings-btns') ;
+    
+    if( owner ) {
+        settingsButtons.classList.remove('hidden')
+    }else {
+        settingsButtons.classList.add('hidden')
+    }
     //* set main owner name 
     ownerPost.innerHTML = `${author.name} . POST` ;
 
@@ -56,6 +67,8 @@ function setPostInfo(author,post) {
 
     //* set post content in body post 
     postCommentsNumbers.innerHTML = post.comments_count
+    
+
 }
 
 //*  this funtion to create tags section 
@@ -151,3 +164,11 @@ commentBtn.onclick = () => {
 
 }
 
+// set buttons Delete And Updata Post 
+let deleteBtnClicked = document.getElementById('delete-btn') ;
+let editBtnClicked = document.getElementById('edit-btn')
+
+deleteBtnClicked.onclick = () => {
+    console.log('here')
+    deletPostBtnClicked(postID)
+}
