@@ -121,7 +121,8 @@ commentBtn.onclick = () => {
     }
     const token = localStorage.getItem('token') ; 
     if( token == null ) {
-        showAlert( "danger-alert",'add comment' , 1)
+        //! done
+        showAlert("Unauthentication","danger-alert")
         return 
     }
     
@@ -139,15 +140,14 @@ commentBtn.onclick = () => {
 
     axios.post(URL,params,config)
     .then( (response) => {
-        showAlert( 'success-alert','add comment' , 0 )
-        window.location.reload()
+        //! done
+        showAlert( "The comment has been created successfully" , 'success-alert')
+        document.getElementById('chat').value = ''
+        executeAllPosts(postID)
     }).catch( error => {
-        showAlert( "danger-alert",'add comment' , 1)
+        //! done
+        showAlert( "Unauthentication" , "danger-alert")
     })
-
-
-
-
 
 }
 

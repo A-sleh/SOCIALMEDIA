@@ -28,14 +28,27 @@ function createpost( post , author ) {
     if( post.title != null ) title = post.title ;
     // create the post with API
     const tagsContainer = createTags(post)
+    //! show or hide (edit) Button
+    let user = JSON.parse(localStorage.getItem('user')) ;
+    let isMyPost = user != null && post.author.id == user.id ;
+    let editdBtnContent = ` ` ;
+    if(isMyPost) {
+        editdBtnContent =`<button id="edit-btn" onclick="editPostBtnClicked('${encodeURIComponent(JSON.stringify(post))}')">Edit</button>`
+    }
     
+
     let pos = `
-    <div class="post cursor-pointer" onclick = "postCliked(${post.id})">
+    <div class="post cursor-pointer">
+        <!-- post headr  -->
         <div class="head-post">
-            <img src="${author.profile_image}" alt="" class="prof-img-sm">
-            <b class="ml-[6px]">${author.username}</b>
+            <!-- User information  -->
+            <div class="flex items-center">
+                <img src="${author.profile_image}" alt="" class="prof-img-sm">
+                <b class="ml-[6px]">${author.username}</b>
+            </div>
+            ${editdBtnContent}
         </div>
-        <div class="post-info">
+        <div class="post-info" onclick = "postCliked(${post.id})">
             <img src="${post.image}" alt="" class="rounded-t-md w-[100%] ">
             <h6 class="text-gray-500 mt-[5px]">${post.created_at}</h6>
             <h5 class="my-[10px] font-semibold">   
@@ -50,7 +63,7 @@ function createpost( post , author ) {
                     <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
                 </svg>
                 <span class="ml-[10px]">
-                    (${post.comments_count}) comments
+                    ( ${post.comments_count} ) comments
                 </span>
                 ${tagsContainer}
             </div>
@@ -106,11 +119,17 @@ let createPostBTnClicked = document.getElementById('create-post-btn') ;
 
 //! set create post molde 
 createPostBtn.onclick = () => {
+    postModleType.innerHTML = "Create A New Post" ;
+    createAndUpdataPostBtn.innerHTML = "create"
+    createAndUpdataPostBtn.value = "true" ;
     showAndHiddenCreatePostModle()
 }
 
 
 createPostBTnClicked.onclick = () => {
+    // selecte Type Requset
+    let typeRequest = createAndUpdataPostBtn.value ; // 1 : POST , 0 : PUT
+
     let postTitle = " " ;
     const token = localStorage.getItem('token') ;
     // get input value
@@ -133,7 +152,16 @@ createPostBTnClicked.onclick = () => {
             "Content-Type" : "multipart/form-data"
         } 
     }
-    axios.post(`${baseURL}/posts`, formData ,config )
+    let URL ;
+
+    if( typeRequest == 'true' ) {
+        URL = `${baseURL}/posts`;
+    }else { 
+        formData.append('_method',"PUT") 
+        URL = `${baseURL}/posts/${typeRequest}`
+    }
+
+    axios.post( URL, formData ,config )
     .then( (response) => {
         // hide the create post modle
         showAndHiddenCreatePostModle()
@@ -141,7 +169,8 @@ createPostBTnClicked.onclick = () => {
         window.location.reload()
     }).catch( error => {        
         const errorType =  error.response.data.message
-        showAlert("danger-alert","error-catch",errorType)
+        //! done
+        showAlert(errorType,"danger-alert")
     })
 }
 

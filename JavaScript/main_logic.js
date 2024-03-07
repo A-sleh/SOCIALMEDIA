@@ -2,6 +2,9 @@
 //* base URL API
 const baseURL = 'https://tarmeezacademy.com/api/v1'
 let createPostBTN = document.getElementsByClassName('create-post')[0]
+let postModleType = document.getElementById('post-modle-type')
+let createAndUpdataPostBtn = document.getElementById('create-post-btn') ;
+
 
 //*  login model
 let loginMolde = document.getElementsByClassName('login-modle')[0] ;
@@ -93,7 +96,8 @@ loginBtnClick.onclick = function() {
     .then( (response) => {
 
         //*  show success alert to user
-        showAlert('success-alert','login')
+        //! done
+        showAlert("logged Successfully",'success-alert')
 
         //*  store user intformation in localStorage 
 
@@ -107,11 +111,12 @@ loginBtnClick.onclick = function() {
 
         //*  setup user interface 
 
-        setupUI() ;
-
+        //* Refresh The Page
+        window.location.reload() ;
     }).catch( error => {
         const errorType =  error.response.data.message
-        showAlert("danger-alert","error-catch",errorType)
+        //! done
+        showAlert(errorType,"danger-alert")
     })
 }
 
@@ -136,7 +141,8 @@ registerBtnClicked.onclick = function() {
     .then( (response) => {
 
         //*  show success alert to user
-        showAlert('success-alert','register')
+        //! doen 
+        showAlert("New User Registred successfully",'success-alert')
 
         //*  store user intformation in localStorage 
 
@@ -150,32 +156,28 @@ registerBtnClicked.onclick = function() {
 
         //*  setup user interface 
 
-        setupUI() ;
+        //* Refresh The Page
+        window.location.reload() ;
 
     }).catch( error => {
         const errorType =  error.response.data.message
-        showAlert("danger-alert","error-catch",errorType)
+        //! done
+        showAlert(errorType,"danger-alert")
     })
 }
 
 //* global popup to show Alert 
 
-function showAlert(alert,type,error) {
+function showAlert(alertMessage,type) {
+
     let Alert = document.getElementById(alert) ; 
-    if(type == 'add comment' && error ) {
-        Alert.innerHTML = "Unauthentication"
-    }else if(type == 'add comment') {
-        Alert.innerHTML = "Added A New Comment"
-    } 
-    else if(type == 'login') {
-        Alert.innerHTML = "logged in successfully"
-    }else if( type == 'register') {
-        Alert.innerHTML = "New User Registred successfully"
-    }else if(type == 'error-catch') {
-        Alert.innerHTML = error
+    if( type == 'danger' ) {
+        Alert = document.getElementById('danger-alert')
     }else {
-        Alert.innerHTML = "logged out successfully" ;
+        Alert = document.getElementById('success-alert')
     }
+    Alert.innerHTML = alertMessage ;
+
     Alert.classList.remove('scale-y-0')
     Alert.classList.add('scale-y-1')
 
@@ -195,17 +197,43 @@ function setupUI() {
         showAndHiddenBtn()
         //* set user info in navbar
         navUserInfo.innerHTML = ""
-        createPostBTN.classList.toggle('scale-y-0')
+        try {
+            //* SHOW AND HIDE COMMETN SECTION IN POST 
+            showAndHidCommentArea();
+        }catch( error ) {
+            //! fixed this problem by defaaulte
+        } 
+        try {
+            //* SHOW AND HIDE CREATE POST BUTTON 
+            createPostBTN.classList.toggle('scale-y-0')
+        }catch( error ) {
+            //! fixed this problem by defaaulte
+        } 
+        
     }else if( token != null && logoutBtn.classList.contains('hidden')) {
+        console.log('alaa')
         showAndHiddenBtn()
+
         //* set user info in navbar
         let content = setUserInfoInNavbar() ;
         navUserInfo.innerHTML += content[0] ;
         navUserInfo.innerHTML += content[1] ;
-        createPostBTN.classList.toggle('scale-y-0')
+
+        try {
+            //* SHOW AND HIDE COMMETN SECTION IN POST 
+            showAndHidCommentArea();
+        }catch( error ) {
+            //! fixed this problem by defaaulte
+        } 
+        try {
+            //* SHOW AND HIDE CREATE POST BUTTON 
+            createPostBTN.classList.toggle('scale-y-0')
+        }catch( error ) {
+            //! fixed this problem by defaaulte
+        } 
+
     }
 }
-
 
 // set navbat button and remove token + user info from localStorage
 
@@ -214,9 +242,12 @@ function logout() {
     localStorage.removeItem('token')
     localStorage.removeItem('user') 
     // setup user interface
-    setupUI() ;
+
+    //* Refresh The Page
+    window.location.reload() ;
     // show alert with successfully logout 
-    showAlert('danger-alert','dan')
+    //! done
+    showAlert("logged out successfully",'danger-alert')
 }
 
 // show and hidden login + logout + register 
@@ -239,12 +270,42 @@ function setUserInfoInNavbar() {
 
     let contetn = 
     [
-        `<img src="${user.profile_image}" alt="" class="prof-img-sm " id="nav-user-image">`
+        `<img src="${user.profile_image}" alt="" class="prof-img-sm " >`
         ,
-        `<h1 class="mx-[15px] font-semibold text-sm md:text-xl" id="nav-user-name">${user.name}</h1>`
+        `<h1 id="nav-user-name">${user.name}</h1>`
     ]
     
     return contetn ;
+}
+
+
+//* this is for show and hide area comment in the post 
+
+function showAndHidCommentArea() {
+
+    let commentContainer = document.getElementById('comment-area') ;
+    console.log(commentContainer)
+    commentContainer.classList.toggle('hidden')
+
+}
+
+//* updata post detailes 
+function editPostBtnClicked(postObject) {
+    postModleType.innerHTML = "Edit Post" ;
+    createAndUpdataPostBtn.innerHTML = "updata"
+    // show the modle 
+    showAndHiddenCreatePostModle()    
+    // get detailes of current post
+    let post = JSON.parse(decodeURIComponent(postObject)) ;
+    let titlePost = document.getElementById('title') ;
+    let bodypost = document.getElementById('description') ;
+    let imagePost = document.getElementById('image-post') ;
+
+    createAndUpdataPostBtn.value = post.id ;
+    // set new value 
+    titlePost.value = post.title ;
+    bodypost.value = post.body ;
+
 }
 
 

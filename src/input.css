@@ -49,6 +49,7 @@
 }
 .head-post {
     @apply flex items-center bg-[#e7e5ee] px-[8px] py-[5px] rounded-t-md border border-white
+    justify-between
 }
 .post-info {
     @apply px-[15px] py-[20px] bg-white rounded-b-md
@@ -76,4 +77,11 @@
 }
 .comment {
     @apply w-[100%] p-3 pr-0 bg-[#f0ecff] rounded-md
+}
+#nav-user-name {
+    @apply mx-[15px] font-semibold text-sm md:text-xl
+}
+#edit-btn {
+    @apply px-[8px] py-[5px] bg-gray-500 text-white rounded-md hover:bg-red-500 
+    transition-all duration-200 shadow-2xl hover:shadow-sm
 }

@@ -108,7 +108,7 @@
         <!-- title + close btn  -->
         <div class="flex justify-between items-center px-[20px]">
             <!-- title -->
-            <h1 class="font-bold text-xl">Create A New Post</h1>
+            <h1 class="font-bold text-xl" id="post-modle-type">Create A New Post</h1>
             <!-- close btn  -->
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg cursor-pointer cls-create-post" viewBox="0 0 16 16">
                 <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
@@ -129,7 +129,7 @@
             <div class="relative ">
                 <h2 class="mb-[8px] font-bold">Add Image</h2>
                 <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="image-post" type="file" multiple>
-                
+    
             </div>
         </form>
         <div class="line"></div>
@@ -137,11 +137,10 @@
         <!-- close + login button  -->
         <div class="flex justify-end text-white font-medium tracking-widest px-[20px]">
             <button class="btn-sm mr-[10px] bg-gray-600 clear-create-post" >clear</button> 
-            <button class="btn-sm bg-sky-500" id="create-post-btn">create</button> 
+            <button class="btn-sm bg-sky-500" id="create-post-btn" value="true">create</button> 
         </div>
     </div> 
     <!-- !end create post modle -->
-
     <!-- end modle  -->
 
     <!-- start alerts  -->
@@ -176,7 +175,7 @@
             <div class="flex items-center justify-center">
                 <!--! user name and Image  -->
                 <div class="flex items-center justify-center" id="user-info">
-                   
+
                 </div>
                 <!-- for logged in user  -->
                 <button class="btn-sm success-btn" id="login">Login</button> 
@@ -193,8 +192,12 @@
             <div class="post">
                 <!-- post headr  -->
                 <div class="head-post">
-                    <img src="./profile-pics/user-pric.jpg" alt="" class="prof-img-sm">
-                    <b class="ml-[6px]">@Yarhmm</b>
+                    <!-- User information  -->
+                    <div class="flex items-center">
+                        <img src="./profile-pics/user-pric.jpg" alt="" class="prof-img-sm">
+                        <b class="ml-[6px]">@Yarhmm</b>
+                    </div>
+                    <button class="float-left" id="edit-btn">Edit</button>
                 </div>
                 <!-- post content  -->
                 <div class="post-info">
