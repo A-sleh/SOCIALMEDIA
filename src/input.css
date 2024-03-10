@@ -8,7 +8,7 @@
     }
 }
 .layout {
-    @apply w-[100%] h-[100vh] bg-[#0000008a] z-50  fixed top-0
+    @apply w-[100%] h-[100vh] bg-[#0000008a]  fixed top-0
     transition-all duration-100 
 }
 .close-modle {
@@ -27,13 +27,23 @@
     focus:border-sky-400
 } 
 .navbar {
-    @apply flex justify-between p-4 rounded-md bg-white shadow-xl fixed top-0 md:w-[60%] w-full z-[40]
+    @apply flex justify-between p-4 py-2 md:py-4 rounded-md bg-white shadow-xl fixed top-0 md:w-[60%] w-full z-[40] 
+}
+.navbar-links {
+    @apply gap-x-4 cursor-pointer items-center  flex font-bold text-[23px] first-letter:text-gray-400 text-center flex-col md:flex-row 
+    bg-[#f0ecff]  md:text-left md:bg-transparent
+}
+
+#nav-bar {  
+    @apply fixed md:relative left-0 top-12 bottom-0 m-auto z-50 p-2
+    w-[65%] md:w-fit bg-white md:top-0 md:p-0 md:m-0 transition-all duration-500
+    translate-x-[-100%] md:translate-x-0
 }
 .line {
     @apply w-full mx-auto my-[15px] h-[1px] bg-gray-300
 }
 .btn-sm {
-    @apply px-[18px] py-[8px] border rounded-md text-center font-semibold
+    @apply px-[12px] py-[5px] md:px-[18px] md:py-[8px] border rounded-md text-center font-semibold text-[14px] md:text-[18px] 
 }
 .success-btn {
     @apply  border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition-all duration-300
@@ -92,9 +102,7 @@
     @apply flex  px-9 py-7 bg-white rounded-md 
     mb-[50px] flex-col items-start w-[100%] md:flex-row
 }
-.profile-image-md {
-    @apply w-[100px] h-[100px] rounded-full mr-[20px]  border-2
-}
+
 .show-number-post {
     @apply text-5xl font-light md:mb-3  relative after:absolute after:content-['Posts'] 
     after:text-sm after:bottom-0 after:ml-[2px] after:text-gray-500 z-20 

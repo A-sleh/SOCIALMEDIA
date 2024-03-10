@@ -12,6 +12,7 @@ let postTitle = document.getElementById('post-title') ;
 let postContent = document.getElementById('psot-content') ;
 let postCommentsNumbers = document.getElementById('comments-numbers') ;
 let tagsContainer = document.getElementById('tags')
+let userId ; 
 
 //*  execute the posts From API requerst
 async function executeAllPosts(postID) {
@@ -19,9 +20,16 @@ async function executeAllPosts(postID) {
     let json = await response.json()
     let post = json.data
     const comments = post.comments
-    let author = post.author
-    // if the user of post i will show settings buttons
-    let owner = JSON.parse(localStorage.getItem("user")).id == author.id ;
+    let author = post.author , owner = false  
+    userId = author.id
+    
+    try {
+        // if the user of post i will show settings buttons
+        owner = JSON.parse(localStorage.getItem("user")).id == author.id ;
+    }catch( error ) {
+
+        console.log("no user register or login yet...")
+    }
 
     
     //! set user infromations
@@ -140,7 +148,6 @@ commentBtn.onclick = () => {
     }
     
     let URL = `${baseURL}/posts/${postID}/comments` ;
-    console.log(token)
     const params = {
         "body" : commentContent 
     }
@@ -150,7 +157,7 @@ commentBtn.onclick = () => {
             'Accept' : "application/json"
         }
     }    
-
+    toggleLoader(true)
     axios.post(URL,params,config)
     .then( (response) => {
         //! done
@@ -160,6 +167,8 @@ commentBtn.onclick = () => {
     }).catch( error => {
         //! done
         showAlert( "Unauthentication" , "danger-alert")
+    }).finally(() => {
+        toggleLoader(false)
     })
 
 }
@@ -169,6 +178,14 @@ let deleteBtnClicked = document.getElementById('delete-btn') ;
 let editBtnClicked = document.getElementById('edit-btn')
 
 deleteBtnClicked.onclick = () => {
-    console.log('here')
     deletPostBtnClicked(postID)
 }
+
+// show user profile 
+
+let postHeader = document.getElementById('post-header-clicked') ;
+
+postHeader.onclick = function() {
+    userClicked(userId)
+}
+

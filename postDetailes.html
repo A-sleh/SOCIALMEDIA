@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- import script and style -->
+    <link rel="stylesheet" href="./src/pure.css">
     <link href="./dist/output.css" rel="stylesheet">
     <script src="./node_modules/axios/dist/axios.min.js"></script>
     <!-- google font  -->
@@ -13,10 +14,18 @@
     <title>Post Detailes</title>
 </head>
 <body class="bg-[#f0ecff]">
+    <!-- start LOADER  -->
+    <div id="loader" class="z-[100000] bg-[#7070707c] flex justify-center items-center fixed left-0 right-0 bottom-0 top-0 m-auto w-[100px] h-[100px] rounded-md">
+        <div class="lds-roller">
+            <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        </div>
+    </div>
+    <!-- end LOADER  -->
+
     <!-- =========start modle==========  -->
 
     <!-- start bluer layer  -->
-    <div class="layout hidden"></div>
+    <div class="layout  z-50 hidden"></div>
     <!-- ! end bluer layer  -->
 
     <!-- start login modle -->
@@ -187,17 +196,19 @@
         <nav class="navbar">
             <!-- start burger menu  -->
             <div class=" block md:hidden cursor-pointer ">
-                <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
                 </svg>
             </div>
             <!-- end burger menu  -->
 
             <!-- links and title  -->
-            <ul class="gap-x-4 items-center hidden md:flex font-bold text-[23px] first-letter:text-gray-400">
-                <li><a href="home.html">Home</a></li>
-                <li><a href="profile.html" id="profile-btn">Profile</a></li>
-            </ul>
+            <div id="nav-bar">
+                <ul class="navbar-links" >
+                    <li class="py-3 px-4 md:p-0 border-b w-full border-b-white md:border-none "><a href="home.html">Home</a></li>
+                    <li class="py-3 px-4 md:p-0"><a onclick="profileClicked()" id="profile-btn">Profile</a></li>
+                </ul>
+            </div>
             <!-- buttons-container -->
             <div class="flex items-center justify-center">
                 <!--! user name and Image  -->
@@ -223,7 +234,7 @@
                 <!-- post headr  -->
                 <div class="head-post">
                     <!-- User information  -->
-                    <div class="flex items-center">
+                    <div class="flex items-center cursor-pointer" id="post-header-clicked">
                         <img src="./profile-pics/user-pric.jpg" alt="" class="prof-img-sm" id="user-image">
                         <b class="ml-[6px]" id="user-name">@Yarhmm</b>
                     </div>

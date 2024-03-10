@@ -10,41 +10,49 @@ let thePageSholdShow = 1 ;
 // ! INFINITE SCROLL
 window.addEventListener("scroll" , function() {
     const endOfPage = window.innerHeight + this.window.scrollY >= this.document.body.offsetHeight
-
+    console.log("the innerHeight : " + window.innerHeight + "\nthe window scrollY : " + this.window.scrollY  + "\n offsetHeight : " + this.document.body.offsetHeight )
     if( endOfPage && lastPage >= currentPage ) {
         if(currentPage == thePageSholdShow )currentPage ++ ;
         else return 
-        console.log(currentPage)
         executeAllPosts(currentPage)
     }
-
 })
 
 //* this funtion to create post 
 
 function createpost( post , author ) {
+
     // set the title of post 
+
     let title = " ";
-    if( post.title != null ) title = post.title ;
+
+    if( post.title != null ) { 
+
+        title = post.title ;
+    }
+
     // create the post with API
+
     const tagsContainer = createTags(post)
+
     //! show or hide (edit) Button
+
     let user = JSON.parse(localStorage.getItem('user')) ;
     let isMyPost = user != null && post.author.id == user.id ;
     let editdBtnContent = ` ` ;
     let deleteBtnContent = ` ` ;
     if(isMyPost) {
+
         editdBtnContent =`<button id="edit-btn" onclick="editPostBtnClicked('${encodeURIComponent(JSON.stringify(post))}')">Edit</button>`
         deleteBtnContent =`<button id="delete-btn" onclick = "deletPostBtnClicked(${post.id})">delete</button>`
     }
-    
 
     let pos = `
     <div class="post cursor-pointer">
         <!-- post headr  -->
-        <div class="head-post" onclick = "setProfileDetailes(0,'${encodeURIComponent(JSON.stringify(author))}')" >
+        <div class="head-post"  >
             <!-- User information  -->
-            <div class="flex items-center">
+            <div class="flex items-center cursor-pointer " onclick = "userClicked(${author.id})">
                 <img src="${author.profile_image}" alt="" class="prof-img-sm">
                 <b class="ml-[6px]">${author.username}</b>
             </div>
@@ -75,38 +83,51 @@ function createpost( post , author ) {
         </div>
     </div>
     `
+
     postContainer.innerHTML += pos
 }
 
 //*  this funtion to create tags section 
 function createTags(post) {
+
     let div = document.createElement('div') ;
+
     div.classList.add("tags") ;
     div.classList.add("flex") ;
+
     const tags = post.tags ;
 
     for( tag of tags ) {
         let subTag = `
-            <div class="tag">${tag}</div>
+            <div class="tag">${tag.name}</div>
         `
         div.innerHTML += subTag
     }
     let tempDiv = document.createElement('div') ;
     tempDiv.appendChild(div) ;
+
     return tempDiv.innerHTML 
 }
 
 //*  execute the posts From API requerst
 async function executeAllPosts(page) {
+    toggleLoader(true)
     let response = await fetch(`${baseURL}/posts?limit=5&page=${page}`)
     let json = await response.json()
     let posts = json.data
+    toggleLoader(false)
 
     // set last Page t
     lastPage = json.meta.last_page
 
-    if(page <= 1) postContainer.innerHTML = "" ;
-    else thePageSholdShow ++ ;
+    if(page <= 1) {
+
+        postContainer.innerHTML = "" ;
+    } 
+    else {
+        
+        thePageSholdShow ++ ;
+    } 
     for( post of posts ) {
         let author = post.author ;
         createpost(post,author)
@@ -116,86 +137,13 @@ async function executeAllPosts(page) {
 executeAllPosts(1)
 
 
-//*  Create Post model
 
-let createPostModle = document.getElementsByClassName('create-post-modle')[0] ;
-let createPostBtn = document.getElementsByClassName('create-post')[0] ;
-let createPostBTnClicked = document.getElementById('create-post-btn') ;
-
-//! set create post molde 
-createPostBtn.onclick = () => {
-    postModleType.innerHTML = "Create A New Post" ;
-    createAndUpdataPostBtn.innerHTML = "create"
-    createAndUpdataPostBtn.value = "true" ;
-    showAndHiddenCreatePostModle()
-}
-
-
-createPostBTnClicked.onclick = () => {
-    // selecte Type Requset
-    let typeRequest = createAndUpdataPostBtn.value ; // 1 : POST , 0 : PUT
-
-    let postTitle = " " ;
-    const token = localStorage.getItem('token') ;
-    // get input value
-    const title = document.getElementById('title').value ;
-    const description = document.getElementById('description').value 
-    const image = document.getElementById('image-post').files[0] 
-    
-    if( title != null ) {
-        postTitle = title ;
-    }
-
-    let formData = new FormData() ;
-    
-    formData.append("body",description)
-    formData.append("title",postTitle)
-    formData.append("image",image)
-    const config = {
-        "headers" : {
-            "authorization" : `Bearer ${token}` ,
-            "Content-Type" : "multipart/form-data"
-        } 
-    }
-    let URL ;
-
-    if( typeRequest == 'true' ) {
-        URL = `${baseURL}/posts`;
-    }else { 
-        formData.append('_method',"PUT") 
-        URL = `${baseURL}/posts/${typeRequest}`
-    }
-
-    axios.post( URL, formData ,config )
-    .then( (response) => {
-        // hide the create post modle
-        showAndHiddenCreatePostModle()
-        // refresh the page to updata all posts
-        window.location.reload()
-    }).catch( error => {        
-        const errorType =  error.response.data.message
-        //! done
-        showAlert(errorType,"danger-alert")
-    })
-}
-
-// list of all AddeventLisner
-addEventListener( 'click' , function(btn) {
-
-    //*  close create new post modle
-    if(btn.target.classList.contains('cls-create-post')) {
-        showAndHiddenCreatePostModle()
-    }
-    //* clear input filed in create new post  modle
-    if(btn.target.classList.contains('clear-create-post')) {
-        clearInputFiled('title','description')
-    }
-})
 
 // change home page to postDetailes 
 function postCliked(postId) {
     window.location = `postDetailes.html?postId=${postId}` ;
 }
+
 
 
 

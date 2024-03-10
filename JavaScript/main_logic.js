@@ -1,15 +1,153 @@
 
+// OPEN AND CLOSE NAVBAR IN MOPILE SCREEN 
+let burgerMenu = `                
+<svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+</svg>` 
+let closeBtn = `
+<svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+</svg>`
+let burgerMenuBtn = document.getElementById('burger-menu')  ;
+let navBar = document.getElementById('nav-bar') ;
+let isOpen = true ; 
+
+burgerMenuBtn.onclick = () => {
+
+    if( isOpen ) {
+        burgerMenuBtn.innerHTML = closeBtn
+        navBar.style.transform = 'translateX(0)'
+        changeLayaoutZindex()
+        
+    }else {
+        burgerMenuBtn.innerHTML = burgerMenu
+        navBar.style.transform = 'translateX(-100%)'
+        
+        changeLayaoutZindex()
+    }
+    layout.classList.toggle('hidden') // hide or show layout layer 
+    isOpen = isOpen ? false : true // change the mode 
+}
+
+function changeLayaoutZindex() {
+    layout.classList.toggle('z-10')
+    layout.classList.toggle('z-50')
+}
+
+{
+
+// document.getElementById('profile-btn').onclick = () => {
+    
+//     if(isOpen) {
+//         closeNavBar() ;
+//     }
+// }
+// document.getElementById('home-btn').onclick = () => {
+    
+//     if(isOpen) {
+//         closeNavBar() ;
+//     }
+// }
+
+// function closeNavBar() {
+//     burgerMenuBtn.innerHTML = burgerMenu
+//     navBar.style.transform = 'translateX(-100%)'
+//     layout.classList.toggle('hidden') // hide or show layout layer 
+//     isOpen = false 
+// }
+
+}
+
 //* base URL API
-const baseURL = 'https://tarmeezacademy.com/api/v1'
+var baseURL = 'https://tarmeezacademy.com/api/v1'
 let createPostBTN = document.getElementsByClassName('create-post')[0]
 let postModleType = document.getElementById('post-modle-type')
 let createAndUpdataPostBtn = document.getElementById('create-post-btn') ;
 
+//*  Create Post model
+
+let createPostModle = document.getElementsByClassName('create-post-modle')[0] ;
+let createPostBtn = document.getElementsByClassName('create-post')[0] ;
+let createPostBTnClicked = document.getElementById('create-post-btn') ;
+
+//! set create post molde 
+createPostBtn.onclick = () => {
+    postModleType.innerHTML = "Create A New Post" ;
+    createAndUpdataPostBtn.innerHTML = "create"
+    createAndUpdataPostBtn.value = "true" ;
+    showAndHiddenCreatePostModle()
+}
+
+
+createPostBTnClicked.onclick = () => {
+    // selecte Type Requset
+    let typeRequest = createAndUpdataPostBtn.value ; // 1 : POST , 0 : PUT
+
+    let postTitle = " " ;
+    const token = localStorage.getItem('token') ;
+    // get input value
+    const title = document.getElementById('title').value ;
+    const description = document.getElementById('description').value 
+    const image = document.getElementById('image-post').files[0] 
+    
+    if( title != null ) {
+        postTitle = title ;
+    }
+
+    let formData = new FormData() ;
+    
+    formData.append("body",description)
+    formData.append("title",postTitle)
+    formData.append("image",image)
+    const config = {
+        "headers" : {
+            "authorization" : `Bearer ${token}` ,
+            "Content-Type" : "multipart/form-data"
+        } 
+    }
+    let URL ;
+
+    if( typeRequest == 'true' ) {
+        URL = `${baseURL}/posts`;
+    }else { 
+        formData.append('_method',"PUT") 
+        URL = `${baseURL}/posts/${typeRequest}`
+    }
+
+    toggleLoader(true)
+    axios.post( URL, formData ,config )
+    .then( (response) => {
+        // hide the create post modle
+        showAndHiddenCreatePostModle()
+        // refresh the page to updata all posts
+        window.location.reload()
+    }).catch( error => {        
+        const errorType =  error.response.data.message
+        //! done
+        showAlert(errorType,"danger-alert")
+    }).finally(() => {
+        toggleLoader(false)
+    })
+}
+
+// list of all AddeventLisner
+addEventListener( 'click' , function(btn) {
+
+    //*  close create new post modle
+    if(btn.target.classList.contains('cls-create-post')) {
+        showAndHiddenCreatePostModle()
+    }
+    //* clear input filed in create new post  modle
+    if(btn.target.classList.contains('clear-create-post')) {
+        clearInputFiled('title','description')
+    }
+})
 
 //*  login model
 let loginMolde = document.getElementsByClassName('login-modle')[0] ;
 let layout = document.getElementsByClassName('layout')[0] ;
 let loginBtn = document.getElementById('login') ;
+
 //! set login modle 
 loginBtn.onclick =() => {
     showAndHiddenLoginModle()
@@ -31,7 +169,7 @@ let registerMolde = document.getElementsByClassName('register-modle')[0] ;
 
 //! set register modle 
 registerBtn.onclick = () => {
-    //!
+    
     showAndHiddenRegisterModle()
 }
 
@@ -96,11 +234,12 @@ loginBtnClick.onclick = function() {
         "username" : username ,
         "password" : password 
     }
+    toggleLoader(true)
     axios.post(`${baseURL}/login`, params )
     .then( (response) => {
 
         //*  show success alert to user
-        //! done
+        
         showAlert("logged Successfully",'success-alert')
 
         //*  store user intformation in localStorage 
@@ -114,13 +253,15 @@ loginBtnClick.onclick = function() {
         showAndHiddenLoginModle() ;
 
         //*  setup user interface 
-
+        
         //* Refresh The Page
         window.location.reload() ;
     }).catch( error => {
         const errorType =  error.response.data.message
         //! done
         showAlert(errorType,"danger-alert")
+    }).finally(() => {
+        toggleLoader(false)
     })
 }
 
@@ -140,10 +281,10 @@ registerBtnClicked.onclick = function() {
     formData.append('username', username )
     formData.append('password', password )
     formData.append('image', imgaeProfile )
-
+    toggleLoader(true)
     axios.post(`${baseURL}/register`, formData )
     .then( (response) => {
-
+        
         //*  show success alert to user
         //! doen 
         showAlert("New User Registred successfully",'success-alert')
@@ -167,6 +308,8 @@ registerBtnClicked.onclick = function() {
         const errorType =  error.response.data.message
         //! done
         showAlert(errorType,"danger-alert")
+    }).finally(() => {
+        toggleLoader(false)
     })
 }
 
@@ -175,7 +318,7 @@ registerBtnClicked.onclick = function() {
 function showAlert(alertMessage,type) {
 
     let Alert = document.getElementById(alert) ; 
-    if( type == 'danger' ) {
+    if( type == 'danger-alert' ) {
         Alert = document.getElementById('danger-alert')
     }else {
         Alert = document.getElementById('success-alert')
@@ -213,9 +356,13 @@ function setupUI() {
         }catch( error ) {
             //! fixed this problem by defaaulte
         } 
+        if( window.location.search != null ) {
+
+            window.location = 'home.html'
+        }
         
     }else if( token != null && logoutBtn.classList.contains('hidden')) {
-        console.log('alaa')
+
         showAndHiddenBtn()
 
         //* set user info in navbar
@@ -248,10 +395,11 @@ function logout() {
     // setup user interface
 
     //* Refresh The Page
-    window.location.reload() ;
+    setupUI()
+    window.location = 'home.html' ;
     // show alert with successfully logout 
     //! done
-    showAlert("logged out successfully",'danger-alert')
+    showAlert("logged out successfully",'success-alert')
 }
 
 // show and hidden login + logout + register 
@@ -288,7 +436,6 @@ function setUserInfoInNavbar() {
 function showAndHidCommentArea() {
 
     let commentContainer = document.getElementById('comment-area') ;
-    console.log(commentContainer)
     commentContainer.classList.toggle('hidden')
 
 }
@@ -326,15 +473,18 @@ function deletPostBtnClicked(postId) {
                 "Content-Type" : "multipart/form-data"
             } 
         }
+        toggleLoader(true)
         axios.delete(URL,config)
         .then((response) => {
             // hidden delete post modale 
             showAndHideDeletePostModal() 
             showAlert( "The Post Has Been Deleted Successfully", 'success-alert') ;
             // reset Page
-            window.location = 'home.html' ;
+            window.location.reload()
         }).catch(error => {
-            console.log(error.response)
+            showAlert(error.response.data , 'danger-alert')
+        }).finally(() => {
+            toggleLoader(false)
         })
     }
 }
@@ -348,12 +498,32 @@ function showAndHideDeletePostModal() {
     layout.classList.toggle('hidden')  
 }
 
-// clicked on profile button 
-
-let profileBtnClicked = document.getElementById('profile-btn') ;
-
-profileBtnClicked.onclick = () => {
-    setProfileDetailes(1,null)
+function profileClicked() {
+    const user = JSON.parse(localStorage.getItem('user')) 
+    let userId = ""
+    if( user != null ) {
+        userId = user.id ;
+    }
+    window.location = `profile.html?userId=${userId}`
 }
+
+
+// change home page to profile 
+function userClicked(userId) {
+    window.location = `profile.html?userId=${userId}`
+}
+
+function toggleLoader(show = true ) {
+    console.log('here')
+    let loaderContainer = document.getElementById('loader')
+    if( show ) {
+        loaderContainer.classList.remove('hidden')
+        loaderContainer.classList.add('flex')
+    }else {
+        loaderContainer.classList.add('hidden')
+    }
+}
+
+
 
 
