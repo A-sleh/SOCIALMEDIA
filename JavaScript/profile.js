@@ -8,13 +8,17 @@ function getCuurentUserId() {
     const id = urlParams.get("userId") ;
     const localUser = localStorage.getItem('user')
     let createPostBtn = document.getElementById('create-post') ;
-    if( localUser != null ) {
-
-        if( JSON.parse(localUser).id == id ) {
-            createPostBtn.classList.remove('invisible')
-        }else {
-            createPostBtn.classList.add('invisible')
+    try {
+        if( localUser != null ) {
+    
+            if( JSON.parse(localUser).id == id ) {
+                createPostBtn.classList.remove('invisible')
+            }else {
+                createPostBtn.classList.add('invisible')
+            }
         }
+    }catch(error) {
+        // the button in this current page dosn't found
     }
     if( localUser != null && id == "" ) {
 

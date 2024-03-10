@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=10">
-    <!-- import script and style -->
-    <link rel="stylesheet" href="./src/pure.css">
-    <link href="./dist/output.css" rel="stylesheet">
-    <script src="./node_modules/axios/dist/axios.min.js"></script>
-    <!-- google font  -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-    <title>Profile</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- import script and style -->
+        <link rel="stylesheet" href="./src/pure.css">
+        <link href="./dist/output.css" rel="stylesheet">
+        <script src="./node_modules/axios/dist/axios.min.js"></script>
+        <!-- google font  -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+        <title>profile</title>
+    </head>
 </head>
 <body class="bg-[#f0ecff]">
     <!-- start LOADER  -->
@@ -196,7 +198,7 @@
         <!-- start navbar  -->
         <nav class="navbar">
             <!-- start burger menu  -->
-            <div class=" block md:hidden cursor-pointer ">
+            <div class=" block md:hidden cursor-pointer " id="burger-menu"> 
                 <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
                 </svg>
@@ -300,6 +302,6 @@
     <!-- import script  -->
     <script src="./JavaScript/main_logic.js"></script>
     <script src="./JavaScript/profile.js"></script>
-    <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
+    
 </body>
 </html>

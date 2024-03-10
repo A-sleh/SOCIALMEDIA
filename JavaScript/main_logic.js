@@ -9,6 +9,7 @@ let closeBtn = `
     <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
 </svg>`
 let burgerMenuBtn = document.getElementById('burger-menu')  ;
+let layout = document.getElementsByClassName('layout')[0] ;
 let navBar = document.getElementById('nav-bar') ;
 let isOpen = true ; 
 
@@ -145,7 +146,6 @@ addEventListener( 'click' , function(btn) {
 
 //*  login model
 let loginMolde = document.getElementsByClassName('login-modle')[0] ;
-let layout = document.getElementsByClassName('layout')[0] ;
 let loginBtn = document.getElementById('login') ;
 
 //! set login modle 
