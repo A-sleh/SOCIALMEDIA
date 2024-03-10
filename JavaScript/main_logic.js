@@ -358,7 +358,7 @@ function setupUI() {
         } 
         if( window.location.search != null ) {
 
-            window.location = 'home.html'
+            window.location = 'index.html'
         }
         
     }else if( token != null && logoutBtn.classList.contains('hidden')) {
@@ -396,7 +396,7 @@ function logout() {
 
     //* Refresh The Page
     setupUI()
-    window.location = 'home.html' ;
+    window.location = 'index.html' ;
     // show alert with successfully logout 
     //! done
     showAlert("logged out successfully",'success-alert')
